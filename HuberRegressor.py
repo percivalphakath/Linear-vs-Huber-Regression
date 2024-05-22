@@ -5,7 +5,7 @@ import statsmodels.formula.api as smf
 import matplotlib.pyplot as plt
 import ipywidgets as widgets
 from IPython.display import display
-from sklearn.metrics import mean_squared_error 
+from sklearn.metrics import mean_squared_error
 
 # Generate some synthetic data with outliers
 np.random.seed(0)
@@ -52,8 +52,8 @@ def update_plot(X_outliers, y_outliers):
     print('Linear Regression MSE:', mean_squared_error(df['y'], model_ols.predict(df['X'])))
 
 # Create interactive widgets for outliers with default values as None
-X_outliers_widget = widgets.Text(value='', description='X_outliers:', continuous_update=False)
-y_outliers_widget = widgets.Text(value='', description='y_outliers:', continuous_update=False)
+X_outliers_widget = widgets.Text(value='', placeholder='e.g., 1, 5, 9', description='X_outliers:', continuous_update=False)
+y_outliers_widget = widgets.Text(value='', placeholder='e.g., 10, 20, 30', description='y_outliers:', continuous_update=False)
 button = widgets.Button(description="Enter")
 
 # Display widgets and initial plot
