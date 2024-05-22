@@ -3,4 +3,4 @@ pandas
 statsmodels
 matplotlib
 ipywidgets
-scikit-sklearn
+scikit-learn
