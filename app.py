@@ -47,11 +47,20 @@ def update_plot(X_outliers, y_outliers):
     st.pyplot(plt)
     
     # Display MSE for both models
-    st.write('Huber Regression MSE:', mean_squared_error(df['y'], model_rlm.predict(df['X'])))
-    st.write('Linear Regression MSE:', mean_squared_error(df['y'], model_ols.predict(df['X'])))
+    mse_rlm = mean_squared_error(df['y'], model_rlm.predict(df['X']))
+    mse_ols = mean_squared_error(df['y'], model_ols.predict(df['X']))
+    st.write('Huber Regression MSE:', mse_rlm)
+    st.write('Linear Regression MSE:', mse_ols)
+
+    st.write(
+        """
+        **Notice:** The MSE of the Huber regressor does not significantly change compared to the linear regressor, 
+        which means the performance of the Huber regressor is not affected by outliers.
+        """
+    )
 
 # Streamlit interface
-st.title('Comparison of OLS and Huber Regression with Outliers')
+st.title('Comparison of Linear and Huber Regression with Outliers')
 
 st.write('Welcome to the regression comparison dashboard!')
 
