@@ -36,8 +36,8 @@ def update_plot(X_outliers, y_outliers):
         plt.scatter(outliers_df['X'], outliers_df['y'], color='red', marker='o', label='Outliers')
     
     X_range = np.linspace(df['X'].min(), df['X'].max(), 100)
-    plt.plot(X_range, model_ols.predict({'X': X_range}), label='OLS', color='orange')
-    plt.plot(X_range, model_rlm.predict({'X': X_range}), label='Linear', color='green')
+    plt.plot(X_range, model_ols.predict({'X': X_range}), label='Linear', color='orange')
+    plt.plot(X_range, model_rlm.predict({'X': X_range}), label='Huber', color='green')
     
     plt.xlabel('X')
     plt.ylabel('y')
