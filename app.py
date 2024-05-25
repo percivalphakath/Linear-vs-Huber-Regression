@@ -1,22 +1,64 @@
-import streamlit as st # pip install streamlit
-import pandas as pd
 import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+import matplotlib.pyplot as plt
+from sklearn.metrics import mean_squared_error
+import streamlit as st
 
-st.title('Simple Streamlit Dashboard')
+# Generate some synthetic data with outliers
+np.random.seed(0)
+n = 100
+X = np.random.rand(n, 1) * 10
+epsilon = np.random.randn(n, 1) * 2
+y = 3 * X.squeeze() + 2 + epsilon.squeeze()
 
-st.write('Welcome to your simple dashboard!')
+# Create initial DataFrame without outliers
+df = pd.DataFrame({'X': X.squeeze(), 'y': y})
 
-# Create a random dataframe
-df = pd.DataFrame(
-    np.random.randn(10, 5),
-    columns=('col %d' % i for i in range(5)))
+# Define function to update plot based on outliers
+def update_plot(X_outliers, y_outliers):
+    X_outliers = np.array([float(x) for x in X_outliers.split(',') if x.strip()]) if X_outliers else np.array([])
+    y_outliers = np.array([float(y) for y in y_outliers.split(',') if y.strip()]) if y_outliers else np.array([])
 
-st.write('Here is a random dataframe:')
-st.write(df)
+    # Introduce outliers
+    outliers_df = pd.DataFrame({'X': X_outliers, 'y': y_outliers})
+    df_with_outliers = pd.concat([df, outliers_df]).reset_index(drop=True)
+    
+    # Fit both models
+    model_ols = smf.ols('y ~ X', data=df_with_outliers).fit()
+    model_rlm = smf.rlm('y ~ X', data=df_with_outliers, M=sm.robust.norms.HuberT()).fit()
+    
+    # Plotting
+    plt.figure(figsize=(10, 6))
+    plt.scatter(df['X'], df['y'], label='Data')
+    if not outliers_df.empty:
+        plt.scatter(outliers_df['X'], outliers_df['y'], color='red', marker='o', label='Outliers')
+    
+    X_range = np.linspace(df['X'].min(), df['X'].max(), 100)
+    plt.plot(X_range, model_ols.predict({'X': X_range}), label='OLS', color='orange')
+    plt.plot(X_range, model_rlm.predict({'X': X_range}), label='Huber', color='green')
+    
+    plt.xlabel('X')
+    plt.ylabel('y')
+    plt.title('Comparison of OLS and Huber Regression with Outliers')
+    plt.legend()
+    plt.grid(True)
+    st.pyplot(plt)
+    
+    # Display MSE for both models
+    st.write('Huber Regression MSE:', mean_squared_error(df['y'], model_rlm.predict(df['X'])))
+    st.write('Linear Regression MSE:', mean_squared_error(df['y'], model_ols.predict(df['X'])))
 
-# Line chart
-st.line_chart(df)
+# Streamlit interface
+st.title('Comparison of OLS and Huber Regression with Outliers')
 
-# User input
-user_input = st.text_input("Enter a number", 0)
-st.write(f'You entered: {user_input}')
+st.write('Welcome to the regression comparison dashboard!')
+
+X_outliers = st.text_input("Enter X outliers (comma-separated):", "")
+y_outliers = st.text_input("Enter y outliers (comma-separated):", "")
+
+if st.button('Update Plot'):
+    update_plot(X_outliers, y_outliers)
+else:
+    update_plot('', '')
