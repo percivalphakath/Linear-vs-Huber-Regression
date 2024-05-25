@@ -41,7 +41,7 @@ def update_plot(X_outliers, y_outliers):
     
     plt.xlabel('X')
     plt.ylabel('y')
-    plt.title('Comparison of OLS and Huber Regression with Outliers')
+    plt.title('Comparison of Linear and Huber Regression with Outliers')
     plt.legend()
     plt.grid(True)
     st.pyplot(plt)
