@@ -1,1 +1,2 @@
 # Linear-vs-Huber-Regression
+It works well when the data is normally distributed and free from outliers. However, linear regression can be highly sensitive to outliers, potentially skewing results and leading to less accurate predictions in the presence of significant outliers.Unlike linear regression, Huber regression uses a hybrid loss function that is less sensitive to outliers by assigning a quadratic loss to data points close to the prediction and a linear loss to those further away.
