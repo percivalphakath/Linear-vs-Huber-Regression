@@ -2,5 +2,5 @@ numpy
 pandas
 statsmodels
 matplotlib
-ipywidgets
+streamlit
 scikit-learn
