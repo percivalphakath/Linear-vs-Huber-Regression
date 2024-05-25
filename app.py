@@ -60,9 +60,8 @@ def update_plot(X_outliers, y_outliers):
     )
 
 # Streamlit interface
-st.title('Comparison of Linear and Huber Regression with Outliers')
-
-st.write('Welcome to the regression comparison dashboard!')
+st.markdown("<h1 style='text-align: center;'>Comparison of OLS and Huber Regression with Outliers</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center;'>Welcome to the regression comparison dashboard!</p>", unsafe_allow_html=True)
 
 X_outliers = st.text_input("Enter X outliers (comma-separated):", "")
 y_outliers = st.text_input("Enter y outliers (comma-separated):", "")
