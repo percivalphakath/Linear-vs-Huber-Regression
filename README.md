@@ -3,4 +3,4 @@ Linear Regression model works well when the data is normally distributed and fre
 
 I’m happy to share the visualisation of "Linear vs Huber Regression Model". Check it out here: 
 
-Dashboard: https://lnkd.in/d5cxx5j
+Dashboard: https://linear-vs-apper-regression-fenom3edhznc2wmkkhqiwz.streamlit.app/
